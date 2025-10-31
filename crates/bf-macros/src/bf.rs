@@ -337,6 +337,10 @@ fn parse_all(input: ParseStream) -> Vec<BfOperator> {
     while !input.is_empty() {
         if let Ok(operator) = input.parse() {
             res.push(operator)
+        } else {
+            // this will skip the invalid tokens that we cant process.
+            // aka comments.
+            _ = input.parse::<proc_macro2::TokenTree>();
         }
         // maybe later add a feature flag or something that spits out
         // if an invalid character was skipped. They are said to be comments but meh.
